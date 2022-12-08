@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::create('cars', function (Blueprint $table) {
             $table->id();
             $table->string('model')->nullable(false);
+            $table->string('image')->nullable(false);
             $table->decimal('price', 7, 2, true)->nullable(false);
             $table->text('description')->nullable(false);
             $table->foreignId('user_id');

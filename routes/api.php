@@ -18,12 +18,16 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::post('/user/register', [UserController::class, 'register']);
-Route::post('/user/login', [UserController::class, 'login']);
+Route::post('/user/login', [UserController::class, 'login'])->name("login");
 Route::get('/cars', [CarsController::class, 'index']);
-Route::post('/cars', [CarsController::class, 'store']);
 Route::get('/cars/{cars}', [CarsController::class, 'show']);
-Route::put('/cars/{cars}', [CarsController::class, 'update']);
-Route::delete('/cars/{cars}', [CarsController::class, 'destroy']);
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+
+
+Route::group(
+    ["middleware" => ["auth:sanctum"]],
+    function () {
+        Route::post('/cars', [CarsController::class, 'store']);
+        Route::put('/cars/{cars}', [CarsController::class, 'update']);
+        Route::delete('/cars/{cars}', [CarsController::class, 'destroy']);
+    }
+);

@@ -35,10 +35,18 @@ class CarsController extends Controller
                 'price' => ['required', 'numeric'],
                 'description' => ['required'],
                 'user_id' => ['required'],
+                'image' => ['required', 'max:4096', "mimes:png,jpg,jpeg"],
             ]);
         } catch (ValidationException $validationError) {
             return response($validationError->errors(), 422);
         }
+        $filename = 'cars' . time() . 'user' . $carData['user_id'] . '.' . $carData["image"]->extension();
+        $path = $request->image->storeAs(
+            'images/cars',
+            $filename,
+            'public'
+        );
+        $carData['image'] = $path;
         $car = Cars::create($carData);
         return response($car, 201);
     }
