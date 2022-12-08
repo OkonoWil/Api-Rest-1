@@ -7,9 +7,11 @@ use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
+use \Illuminate\Http\Response;
 
 class UserController extends Controller
 {
+
     public function register(Request $request)
     {
         try {
@@ -26,9 +28,20 @@ class UserController extends Controller
         $user = User::create([
             "name" => $userData['name'],
             "email" => $userData['email'],
-            "password" => Hash::make($userData['name']),
+            "password" => Hash::make($userData['password']),
         ]);
         return response($user->toJson(), 201);
+        // $this->validate($request, [
+        //     'name' => ["required", "string"],
+        //     'email' => ["required", "email", "unique:users,email"],
+        //     'password' => ["required", "min:8"]
+        // ]);
+        // $user = User::create([
+        //     "name" => $request->name,
+        //     "email" => $request->email,
+        //     "password" => Hash::make($request->password),
+        // ]);
+        // return response($user, 201);
     }
 
     public function login(Request $request)
