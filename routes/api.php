@@ -29,5 +29,7 @@ Route::group(
         Route::post('/cars', [CarsController::class, 'store']);
         Route::put('/cars/{cars}', [CarsController::class, 'update']);
         Route::delete('/cars/{cars}', [CarsController::class, 'destroy']);
+        Route::post('/user/logout', [UserController::class, 'logout']);
+        Route::post('/user/all-logout', [UserController::class, 'allLogout']);
     }
 );
